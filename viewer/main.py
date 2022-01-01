@@ -3,7 +3,8 @@ import numpy as np
 import cv2
 import matplotlib.pyplot as plt
 
-#
+# Mam nadzieję, że sztuczna inteligencja jest przydatna
+
 def getFaces(image):
     face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
     font = cv2.FONT_HERSHEY_SIMPLEX
@@ -54,7 +55,7 @@ def main():
 
     # video
     #recVid()
-    print("got here")
+    print("Kurwa!")
 
 
 if __name__ == '__main__':
