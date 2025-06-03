@@ -1,12 +1,15 @@
 import os
 import numpy as np
 import cv2
-import matplotlib.pyplot as plt
 
 # Mam nadzieję, że sztuczna inteligencja jest przydatna
 
+CASCADE_PATH = os.path.join(os.path.dirname(__file__),
+                            'haarcascade_frontalface_default.xml')
+
+
 def getFaces(image):
-    face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+    face_cascade = cv2.CascadeClassifier(CASCADE_PATH)
     font = cv2.FONT_HERSHEY_SIMPLEX
     fontScale = 2
     thickness = 2
@@ -33,10 +36,13 @@ def recVid():
     fourcc = 0x7634706d
     out = cv2.VideoWriter(os.path.join("data", 'faces.mp4'), fourcc, 20.0, (1920, 1080))
 
-    while (True):
+    while True:
         ret, frame = cap.read()
-        out.write(getFaces(frame))
-        cv2.imshow('frame', frame)
+        if not ret:
+            break
+        processed = getFaces(frame)
+        out.write(processed)
+        cv2.imshow('frame', processed)
         c = cv2.waitKey(1)
         if c & 0xFF == ord('q'):
             break
@@ -47,15 +53,8 @@ def recVid():
 
 
 def main():
-    # picture
-    pth = os.path.join("data", "dom.png")
-    image = getFaces(cv2.imread(pth))
-    plt.imshow(image)
-    plt.show()
-
-    # video
-    #recVid()
-    print("Kurwa!")
+    # Run real-time face detection on webcam feed
+    recVid()
 
 
 if __name__ == '__main__':
